@@ -1,0 +1,77 @@
+/* Base layout fix */
+.main-layout {
+  display: flex;
+}
+
+/* Ensure sidebar stays visible */
+app-sidebar {
+  width: 260px;
+  min-height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Container spacing (pushes right due to sidebar) */
+.container-fluid {
+  margin-left: 260px; /* Same as sidebar width */
+  padding: 20px;
+  width: calc(100% - 260px);
+}
+
+/* Slide-in Form Panel */
+.transaction-form-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1050;
+  padding: 20px;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.transaction-form-panel.open {
+  right: 0;
+}
+
+/* Close button */
+.form-header .btn-close {
+  font-size: 18px;
+}
+
+/* Table styling */
+.table {
+  background-color: #fff;
+  width: 100%;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+}
+
+/* Responsive fix */
+@media (max-width: 768px) {
+  app-sidebar {
+    position: relative;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .container-fluid {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .transaction-form-panel {
+    width: 100%;
+  }
+}

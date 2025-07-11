@@ -1,0 +1,41 @@
+/* Slide-in Panel */
+.supplier-form-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 400px;
+  height: 100vh;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1050;
+  overflow-y: auto;
+  transition: right 0.3s ease-in-out;
+}
+
+.supplier-form-panel.open {
+  right: 0;
+}
+
+.btn-close {
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Content margin to push from left (same as sidebar width) */
+.content-area {
+  margin-left: 260px;
+}
+
+/* Responsive fix */
+@media (max-width: 768px) {
+  .supplier-form-panel {
+    width: 100%;
+  }
+  .content-area {
+    margin-left: 0;
+    padding: 0 15px;
+  }
+}

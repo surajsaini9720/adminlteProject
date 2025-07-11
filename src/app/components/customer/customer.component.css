@@ -1,0 +1,75 @@
+/* Layout */
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* Content beside sidebar */
+.content-area {
+  margin-left: 260px; /* sidebar width */
+  padding: 20px;
+  width: calc(100% - 260px);
+  background-color: #f8f9fa;
+  position: relative;
+}
+
+/* Slide-in customer form panel */
+.customer-form-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 500px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  overflow-y: auto;
+  transition: right 0.3s ease-in-out;
+  z-index: 1050;
+}
+
+.customer-form-panel.open {
+  right: 0;
+}
+
+.customer-form-panel .btn-close {
+  font-size: 1.2rem;
+  border: none;
+  background: transparent;
+}
+
+/* Table styling */
+.customer-table th,
+.customer-table td {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #f97316;
+  border-color: #f97316;
+}
+
+.btn-primary:hover {
+  background-color: #ea580c;
+  border-color: #ea580c;
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+  .content-area {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .customer-form-panel {
+    width: 100%;
+  }
+}

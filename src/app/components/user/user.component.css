@@ -1,0 +1,23 @@
+.main-layout {
+  display: flex;
+}
+
+app-sidebar {
+  flex-shrink: 0;
+}
+
+.container-fluid {
+  padding-left: 300px;
+  padding-right: 20px;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.table {
+  background-color: #fff;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+}

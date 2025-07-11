@@ -1,0 +1,143 @@
+<div class="container-fluid py-4">
+  <!-- Authors Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+          <h6>Authors Table</h6>
+          <button class="btn btn-primary btn-sm" (click)="openModal('author')">Add Author</button>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th>Author</th>
+                  <th>Function</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Employed</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let author of authors">
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{ author.name }}</h6>
+                        <p class="text-xs text-secondary mb-0">{{ author.website }}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0">{{ author.role }}</p>
+                    <p class="text-xs text-secondary mb-0">{{ author.department }}</p>
+                  </td>
+                  <td class="align-middle text-center text-sm">
+                    <span class="badge badge-sm" [ngClass]="{
+                      'bg-gradient-success': author.status === 'Online',
+                      'bg-gradient-secondary': author.status === 'Offline'
+                    }">{{ author.status }}</span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{ author.employed }}</span>
+                  </td>
+                  <td class="align-middle">
+                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs">Edit</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+          <h6>Projects Table</h6>
+          <button class="btn btn-primary btn-sm" (click)="openModal('project')">Add Project</button>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center justify-content-center mb-0">
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Budget</th>
+                  <th>Status</th>
+                  <th class="text-center">Completion</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let project of projects">
+                  <td><h6 class="mb-0 text-sm">{{ project.name }}</h6></td>
+                  <td><p class="text-sm font-weight-bold mb-0">{{ project.budget }}</p></td>
+                  <td><span class="text-xs font-weight-bold">{{ project.status }}</span></td>
+                  <td class="align-middle text-center">
+                    <div class="d-flex align-items-center justify-content-center">
+                      <span class="me-2 text-xs font-weight-bold">{{ project.completion }}%</span>
+                      <div class="progress w-75">
+                        <div class="progress-bar" role="progressbar"
+                          [ngClass]="{
+                            'bg-gradient-success': project.completion === 100,
+                            'bg-gradient-danger': project.completion < 50,
+                            'bg-gradient-info': project.completion >= 50 && project.completion < 100
+                          }"
+                          [style.width.%]="project.completion">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="align-middle">
+                    <button class="btn btn-link text-secondary mb-0">
+                      <i class="fa fa-ellipsis-v text-xs"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="modal-backdrop">
+    <div class="modal-container card p-4">
+      <h5 class="mb-3">Add {{ modalType === 'author' ? 'Author' : 'Project' }}</h5>
+
+      <!-- Author Form -->
+      <div *ngIf="modalType === 'author'">
+        <input class="form-control mb-2" placeholder="Name" [(ngModel)]="newAuthor.name">
+        <input class="form-control mb-2" placeholder="Website" [(ngModel)]="newAuthor.website">
+        <input class="form-control mb-2" placeholder="Role" [(ngModel)]="newAuthor.role">
+        <input class="form-control mb-2" placeholder="Department" [(ngModel)]="newAuthor.department">
+        <select class="form-control mb-2" [(ngModel)]="newAuthor.status">
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+        </select>
+        <input class="form-control mb-3" placeholder="Employed" [(ngModel)]="newAuthor.employed">
+      </div>
+
+      <!-- Project Form -->
+      <div *ngIf="modalType === 'project'">
+        <input class="form-control mb-2" placeholder="Project Name" [(ngModel)]="newProject.name">
+        <input class="form-control mb-2" placeholder="Budget" [(ngModel)]="newProject.budget">
+        <input class="form-control mb-2" placeholder="Status" [(ngModel)]="newProject.status">
+        <input type="number" class="form-control mb-3" placeholder="Completion (%)" [(ngModel)]="newProject.completion">
+      </div>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button class="btn btn-secondary btn-sm" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-success btn-sm" (click)="saveData()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

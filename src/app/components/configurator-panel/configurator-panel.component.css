@@ -1,0 +1,12 @@
+/* Keep default Soft UI styles; add tweaks only if necessary */
+.fixed-plugin {
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+}
+.fixed-plugin-button {
+  right: 20px;
+  bottom: 20px;
+  cursor: pointer;
+  z-index: 10000;
+}

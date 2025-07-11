@@ -1,0 +1,62 @@
+<!-- src/app/components/users/user.component.html -->
+<div class="main-layout">
+  <app-sidebar></app-sidebar>
+
+  <div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>User Management</h3>
+      <button class="btn btn-primary" (click)="resetForm()">+ Add User</button>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="row g-3 mb-4">
+      <div class="col-md-4">
+        <input type="text" formControlName="name" class="form-control" placeholder="Name" />
+      </div>
+      <div class="col-md-4">
+        <input type="email" formControlName="email" class="form-control" placeholder="Email" />
+      </div>
+      <div class="col-md-2">
+        <select formControlName="role" class="form-select">
+          <option value="Admin">Admin</option>
+          <option value="Staff">Staff</option>
+          <option value="Viewer">Viewer</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <select formControlName="status" class="form-select">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-success">{{ isEdit ? 'Update' : 'Add' }}</button>
+      </div>
+    </form>
+
+    <!-- Table -->
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users">
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.role }}</td>
+          <td>{{ u.status }}</td>
+          <td>
+            <button class="btn btn-sm btn-info me-1" (click)="editUser(u)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteUser(u._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
