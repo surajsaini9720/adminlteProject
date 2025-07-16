@@ -1,4 +1,4 @@
-import { NgModule, reflectComponentType } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
@@ -10,26 +10,26 @@ import { TransactionComponent } from './components/transaction/transaction.compo
 import { ReportComponent } from './components/report/report.component';
 import { UserComponent } from './components/user/user.component';
 
-const routes: Routes = [  
+import { AuthGuard } from './guards/auth.guard';  
+const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'dashboard', component: DashboardComponent }, 
-  { path: 'table', component: TableComponent },
-  { path: 'customers', component: CustomerComponent },
-  { path: 'suppliers', component: SupplierComponent }, 
-  { path: 'transactions', component: TransactionComponent },
-  { path: 'report', component: ReportComponent },
-    { path: 'user', component: UserComponent },
 
-  
+  // ✅ Protected Routes
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'table', component: TableComponent, canActivate: [AuthGuard] },
+  { path: 'customers', component: CustomerComponent, canActivate: [AuthGuard] },
+  { path: 'suppliers', component: SupplierComponent, canActivate: [AuthGuard] },
+  { path: 'transactions', component: TransactionComponent, canActivate: [AuthGuard] },
+  { path: 'report', component: ReportComponent, canActivate: [AuthGuard] },
+  { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
 
-
-
-
+  { path: '**', redirectTo: 'login' } 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

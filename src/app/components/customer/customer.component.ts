@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomerService } from '../../service/customer.service';
+import { AuthService } from '../../service/auth.service';  
 
 @Component({
   selector: 'app-customer',
@@ -13,52 +14,55 @@ export class CustomerComponent implements OnInit {
   customers: any[] = [];
   isEdit = false;
   selectedId = '';
-  userId = '123456789'; // Static userId for now
-  showForm = false; // <-- used for toggling form visibility
+  userId = '';
+  showForm = false;
 
-  constructor(private fb: FormBuilder, private cs: CustomerService) {}
+  constructor(
+    private fb: FormBuilder,
+    private cs: CustomerService,
+    private auth: AuthService
+  ) {}
 
   ngOnInit(): void {
+    const tokenData = this.decodeToken();
+    this.userId = tokenData?.userId || '';
+
     this.customerForm = this.fb.group({
       name: [''],
       phone: [''],
       email: [''],
       address: [''],
-      gstNumber: [''],
-      userId: [this.userId]
+      gstNumber: ['']
     });
 
     this.getAllCustomers();
   }
 
-  // 🔁 Get all customer data
   getAllCustomers() {
-    this.cs.getCustomers(this.userId).subscribe(res => {
+    this.cs.getCustomers().subscribe(res => {
       this.customers = res;
     });
   }
 
-  // ✅ Form Submit for Add or Update
   onSubmit() {
     const formData = this.customerForm.value;
 
     if (this.isEdit) {
       this.cs.updateCustomer(this.selectedId, formData).subscribe(() => {
         this.getAllCustomers();
-        this.customerForm.reset({ userId: this.userId });
+        this.customerForm.reset();
         this.isEdit = false;
         this.showForm = false;
       });
     } else {
       this.cs.addCustomer(formData).subscribe(() => {
         this.getAllCustomers();
-        this.customerForm.reset({ userId: this.userId });
+        this.customerForm.reset();
         this.showForm = false;
       });
     }
   }
 
-  // ✏️ Edit button clicked
   editCustomer(cust: any) {
     this.customerForm.patchValue(cust);
     this.selectedId = cust._id;
@@ -66,22 +70,32 @@ export class CustomerComponent implements OnInit {
     this.showForm = true;
   }
 
-  // ❌ Delete customer
   deleteCustomer(id: string) {
     this.cs.deleteCustomer(id).subscribe(() => {
       this.getAllCustomers();
     });
   }
 
-  // ➕ Open form (Add New)
   openForm() {
-    this.customerForm.reset({ userId: this.userId });
+    this.customerForm.reset();
     this.isEdit = false;
     this.showForm = true;
   }
+
   closeForm() {
-  this.customerForm.reset({ userId: this.userId });
-  this.isEdit = false;
-  this.showForm = false;
-}
+    this.customerForm.reset();
+    this.isEdit = false;
+    this.showForm = false;
+  }
+
+  decodeToken() {
+    const token = this.auth.getToken();
+    if (!token) return null;
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      console.error('Token decode failed:', e);
+      return null;
+    }
+  }
 }

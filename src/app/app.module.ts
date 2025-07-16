@@ -26,11 +26,13 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { Navbar3Component } from './components/navbar3/navbar3.component';
 import { TableComponent } from './components/table/table.component';
 import { CustomerComponent } from './components/customer/customer.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SupplierComponent } from './components/supplier/supplier.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
 import { ReportComponent } from './components/report/report.component';
 import { UserComponent } from './components/user/user.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+
 
 
 @NgModule({
@@ -67,7 +69,13 @@ import { UserComponent } from './components/user/user.component';
     HttpClientModule,
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

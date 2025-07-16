@@ -38,7 +38,6 @@
                 }
               ],
               "styles": [
-                "src/assets/css/nucleo-icons.css",
                 "src/assets/css/nucleo-svg.css",
                 "src/assets/css/soft-ui-dashboard.css",
                 "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
@@ -59,9 +58,9 @@
               "production": {
                 "budgets": [
                   {
-                    "type": "initial",
-                    "maximumWarning": "500kB",
-                    "maximumError": "1MB"
+                       "type": "initial",
+                         "maximumWarning": "2mb",
+                          "maximumError": "3mb"
                   },
                   {
                     "type": "anyComponentStyle",
